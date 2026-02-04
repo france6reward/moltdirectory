@@ -425,8 +425,9 @@ async function build() {
       const skillDir = path.join(catDir, s.id);
       if (!fs.existsSync(skillDir)) fs.mkdirSync(skillDir, { recursive: true });
 
+      const rawUrl = s.url.replace('github.com', 'raw.githubusercontent.com').replace('/tree/', '/').replace('/blob/', '/') + '/SKILL.md';
+
       try {
-        const rawUrl = s.url.replace('github.com', 'raw.githubusercontent.com').replace('/tree/', '/').replace('/blob/', '/') + '/SKILL.md';
         const skillRes = await axios.get(rawUrl);
         let skillMd = skillRes.data;
 
@@ -500,7 +501,7 @@ async function build() {
         `;
         fs.writeFileSync(path.join(skillDir, 'index.html'), PAGE_TEMPLATE(skillContent, s.name, s.desc, 2));
       } catch (err) {
-        console.error(`Failed to fetch SKILL.md for ${s.name}: ${err.message}`);
+        console.error(`Failed to fetch SKILL.md for ${s.id}: ${err.message}`);
         // Fallback page if SKILL.md fails
         const fallbackContent = `
           <section class="skill-page-header">
