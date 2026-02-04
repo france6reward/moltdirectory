@@ -416,14 +416,14 @@ async function build() {
       </section>
     `;
     const catDir = path.join(OUTPUT_DIR, cat.id);
-    if (!fs.existsSync(catDir)) fs.mkdirSync(catDir);
+    if (!fs.existsSync(catDir)) fs.mkdirSync(catDir, { recursive: true });
     fs.writeFileSync(path.join(catDir, 'index.html'), PAGE_TEMPLATE(catContent, cat.name, cat.desc, 1));
 
     // 3. Generate Skill Pages
     console.log(`Generating pages for ${cat.name}...`);
     for (const s of catSkills) {
       const skillDir = path.join(catDir, s.id);
-      if (!fs.existsSync(skillDir)) fs.mkdirSync(skillDir);
+      if (!fs.existsSync(skillDir)) fs.mkdirSync(skillDir, { recursive: true });
 
       try {
         const rawUrl = s.url.replace('github.com', 'raw.githubusercontent.com').replace('/tree/', '/').replace('/blob/', '/') + '/SKILL.md';
@@ -609,7 +609,7 @@ MoltBot's power comes from **Skills** (plugins). Out of the box, it can do basic
     </article>
   `;
   const startHereDir = path.join(OUTPUT_DIR, 'start-here');
-  if (!fs.existsSync(startHereDir)) fs.mkdirSync(startHereDir);
+  if (!fs.existsSync(startHereDir)) fs.mkdirSync(startHereDir, { recursive: true });
   fs.writeFileSync(path.join(startHereDir, 'index.html'), PAGE_TEMPLATE(startHereContent, 'Start Here', 'The Unofficial Guide to MoltBot', 1));
 
   console.log('\nBuild Finished Successfully!');
