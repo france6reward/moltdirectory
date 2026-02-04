@@ -426,7 +426,7 @@ async function build() {
       if (!fs.existsSync(skillDir)) fs.mkdirSync(skillDir);
 
       try {
-        const rawUrl = s.url.replace('github.com', 'raw.githubusercontent.com').replace('/tree/', '/').replace('/blob/', '/');
+        const rawUrl = s.url.replace('github.com', 'raw.githubusercontent.com').replace('/tree/', '/').replace('/blob/', '/') + '/SKILL.md';
         const skillRes = await axios.get(rawUrl);
         let skillMd = skillRes.data;
 
